@@ -173,18 +173,12 @@ update_php() {
 
 # Function to install PHP.
 add_php() {
-  if [ "${runner:?}" = "self-hosted" ] || [ "${use_package_cache:-true}" = "false" ]; then
-    if [[ "$version" =~ ${nightly_versions:?} ]]; then
-        setup_nightly
-    else
-      add_packaged_php
-      switch_version >/dev/null 2>&1
-      add_pecl
-    fi
-  elif [[ "$version" =~ ${old_versions:?} ]]; then
-    setup_old_versions
+  if [[ "$version" =~ ${nightly_versions:?} ]]; then
+    setup_nightly
   else
-    setup_cached_versions
+    add_packaged_php
+    switch_version >/dev/null 2>&1
+    add_pecl
   fi
   status="Installed"
 }
